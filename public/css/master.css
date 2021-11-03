@@ -1,0 +1,27 @@
+header {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+#map {
+height: 100%;
+}
+
+html,
+body, .container-fluid {
+height: 100%;
+margin: 0;
+padding: 0;
+}
+.btn-find-me{
+  margin-top: 73px;;
+}
+.box-msg{
+    width: 300px;
+    position:absolute;
+    right:10%;
+    top: 100px;
+    z-index: 1;
+}

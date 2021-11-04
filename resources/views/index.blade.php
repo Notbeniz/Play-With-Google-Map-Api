@@ -1,12 +1,18 @@
 <x-app>
-
-   <div class="w-25 m-auto pt-5">
-    <form action="{{route('points.import')}}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="file" name="excel" id="" class="form-control">
-        <div class="text-center mt-2">
-            <button type="submit" class="btn btn-info">upload</button>
+   <div class="formBox">
+    <div class="card">
+        <div class="card-header">
+            Upload Your Excel File
         </div>
-    </form>
+        <div class="card-body">
+            <form action="{{route('points.import')}}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="excel" id="" class="form-control">
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn">upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
    </div>
 </x-app>

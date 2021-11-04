@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Direction</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{asset('css/master.css')}}">
     <style>
 
 html,
@@ -28,6 +30,7 @@ body {
   height: 100%;
   box-sizing: border-box;
   overflow: auto;
+  padding-top: 40px;
 }
 
 #map {
@@ -35,18 +38,26 @@ body {
   flex-grow: 4;
   height: 100%;
 }
+
+
     </style>
 </head>
 <body>
-    <div id="container">
+    <div id="container" class="container-fluid">
+      <header>
+        <x-nav></x-nav>
+    </header>
+    <x-message></x-message> 
         <div id="map"></div>
+        <button class="btn btn-primary sideBatBtn">*</button>
         <div id="sidebar">
           <p>Total Distance: <span id="total"></span></p>
           <div id="panel"></div>
         </div>
       </div>
+      <script src="{{asset('js/app.js')}}"></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg_y672ELCDf2FhP9wBJJqIf99dUkB6vo&callback=initMap&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key={APPKEY}&callback=initMap&v=weekly"
       async
     ></script>
 
@@ -54,7 +65,7 @@ body {
     function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 4,
-    center:{ lat: 35.7771685822767, lng: 51.4279889389357 }, // Australia.
+    center:{ lat: 35.7771685822767, lng: 51.4279889389357 },
   });
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -64,15 +75,18 @@ body {
   });
 
   var ways = @json($locations);
+  var loc = @json($loc);
   const waypts = [];
   for(let i = 0 ; i<ways.length ; i++) {
     
-    var origin = ways[0]["address"];
     var destination = ways[10]["address"];
     waypts.push({
-        location: ways[i]["address"],
+      location: ways[i]["address"],
     });
   }
+  var origin = {lat: parseFloat(loc['lat']), lng: parseFloat(loc['long'])};
+
+  console.log(destination);
   directionsRenderer.addListener("directions_changed", () => {
     const directions = directionsRenderer.getDirections();
 
@@ -88,6 +102,7 @@ body {
     waypts
     );
   }
+  console.log(origin);
 function displayRoute(origin, destination, service, display, waypts) {
   service
     .route({
@@ -120,6 +135,12 @@ function computeTotalDistance(result) {
   total = total / 1000;
   document.getElementById("total").innerHTML = total + " km";
 }
+
+$(document).ready(function(){
+  $(".sideBatBtn").click(function(){
+    $("#sidebar").toggle('10');
+  });
+});
     </script>
 
 </body>

@@ -30,7 +30,8 @@ class PointsController extends Controller
 
             $loc= ["lat" => $request['lat'] ,"long" => $request['lng']];
             $locations = $this->distance($loc);
-            return view('direction', compact('locations'));
+           
+            return view('direction', compact('locations','loc'));
         } else {
             return back()->with('session_empty', 'frist upload excel file');
         }
@@ -40,7 +41,7 @@ class PointsController extends Controller
     {
         $mylist = session()->get('cordinates');
         $cordinates = session()->get('cordinates');
-        
+        // $data [] = $loc;
           for($i=0; $i< count($mylist); $i++ )  {
             $num = 0;
             foreach($cordinates as $key=>$cordinate) {
@@ -60,6 +61,7 @@ class PointsController extends Controller
         unset($cordinates[$index]);
 
         }
+        // dd($data);
         return $data;
     }
 
